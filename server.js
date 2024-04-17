@@ -24,16 +24,13 @@ app.use('/public', express.static(process.cwd() + '/public'));
 
 app.use(cors({origin: '*'})); //For FCC testing purposes only
 
-app.use(helmet({
-  contentSecurityPolicy: {
-    directives: {
-      defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "trusted-cdn.com"],
-      styleSrc: ["'self'", "trusted-cdn.com"]
-    },
-    referrerPolicy: { policy: 'same-origin' }
-  }
-}));
+app.use(helmet.frameguard());
+app.use(
+  helmet({
+    referrerPolicy: { policy: "same-origin" },
+  })
+);
+app.use(helmet.dnsPrefetchControl());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));

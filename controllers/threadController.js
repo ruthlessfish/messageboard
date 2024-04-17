@@ -62,7 +62,7 @@ async function reportThread(req, res, next) {
     const { board } = req.params;
     const { thread_id } = req.body;
     await Thread.findByIdAndUpdate(thread_id, { reported: true });
-    res.send("success");
+    res.send("reported");
   } catch (err) {
     console.log(err);
     res.json(err);

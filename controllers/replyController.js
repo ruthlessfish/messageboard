@@ -56,7 +56,7 @@ async function reportReply(req, res) {
     const { board } = req.params;
     const { thread_id, reply_id } = req.body;
     await Reply.findByIdAndUpdate(reply_id, { reported: true });
-    res.send("success");
+    res.send("reported");
   } catch (err) {
     console.log(err);
     res.json(err);
@@ -71,7 +71,8 @@ async function deleteReply(req, res) {
     const { thread_id, reply_id, delete_password } = req.body;
     const reply  = await Reply.findById(reply_id);
     if (reply.delete_password === delete_password) {
-      Reply.findByIdAndDelete(reply_id);
+      reply.text = "[deleted]";
+      await reply.save();
       res.send("success");
     } else {
       res.send("incorrect password");
