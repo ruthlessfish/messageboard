@@ -30,7 +30,8 @@ app.use(helmet({
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "trusted-cdn.com"],
       styleSrc: ["'self'", "trusted-cdn.com"]
-    }
+    },
+    referrerPolicy: { policy: 'same-origin' }
   }
 }));
 
