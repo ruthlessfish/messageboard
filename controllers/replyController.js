@@ -42,7 +42,7 @@ async function createReply(req, res) {
     }
 
     thread.replies.push(reply);
-    thread.bumped_on = new Date();
+    thread.bumped_on = reply.created_on;
     await thread.save();
     res.redirect(`/b/${board}/${thread_id}`);
   } catch (err) {
