@@ -9,10 +9,11 @@ async function getReplies(req, res) {
   try {
     const { board } = req.params;
     const { thread_id } = req.query;
-    const replies = await Reply.findById(thread_id)
-      .select("-delete_password -reported")
+    const thread = await Thread.findById(thread_id)
+      .select("-reported -delete_password")
+      .populate("replies", "-delete_password -reported")
       .exec();
-    res.json(replies);
+    res.json(thread);
   } catch (err) {
     console.log(err);
     res.json(err);
@@ -30,7 +31,8 @@ async function createReply(req, res) {
       thread_id: thread_id, 
       text:text, 
       delete_password: delete_password,
-      created_on: new Date()
+      created_on: new Date(),
+      reported: false
     });
 
     await reply.save();

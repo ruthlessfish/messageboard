@@ -14,7 +14,8 @@ async function createThread(req, res, next) {
       delete_password: delete_password,
       created_on: new Date(),
       bumped_on: new Date(),
-      replies: []
+      replies: [],
+      reported: false
     });
     await newThread.save();
     res.redirect(`/b/${board}`);
